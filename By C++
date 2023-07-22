@@ -1,0 +1,52 @@
+#include <iostream>
+#include <set>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int weight;
+    cin >> weight;
+
+    if (weight < 1 || weight > 100) {
+        cout << "Invalid input" << endl;
+        return 0;
+    }
+    else if (weight % 2 == 0) {
+        if (weight == 2) {
+            cout << "Impossible to give even numbers after dividing" << endl;
+        }
+        else {
+            cout << "Possible to give even numbers after dividing" << endl;
+        }
+    }
+    else {
+        cout << "Impossible to give even numbers after dividing" << endl;
+    }
+
+    // Counting the number of possible ways to divide the watermelon
+    int count = 0;
+    set<vector<int>> combinations;
+    for (int i = 1; i < weight; i++) {
+        if (i % 2 == 0 && (weight - i) % 2 == 0) {
+            vector<int> combination = {i, weight - i};
+            sort(combination.begin(), combination.end());
+            if (combinations.find(combination) == combinations.end()) {
+                count++;
+                combinations.insert(combination);
+            }
+        }
+    }
+
+    cout << "There are " << count << " possible ways to divide it." << endl;
+    if (count > 0) {
+        cout << "The combinations are:";
+        for (auto c : combinations) {
+            cout << " [" << c[0] << ", " << c[1] << "]";
+        }
+        cout << " and vice-versa of the arranged pair." << endl;
+    }
+
+    return 0;
+}
